@@ -1,3 +1,4 @@
+import FilmCard from "./FilmCard";
 import { useEffect, useState } from "react";
 import { API_URL } from "./api";
 import type { Film } from "./types";
@@ -30,11 +31,11 @@ useEffect(() => {
   if (error) return <p>{error}</p>;
 
   return (
-    <ul>
-      {films.map(film => (
-        <li key={film.id}>{film.title}</li>
-      ))}
-    </ul>
+  <div>
+    {films.map(film => (
+      <FilmCard key={film.id} film={film} />
+    ))}
+  </div>
   );
 };
 
