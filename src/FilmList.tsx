@@ -1,12 +1,15 @@
 import FilmCard from "./FilmCard";
 import { useEffect, useState } from "react";
 import { API_URL } from "./api";
-import type { Film } from "./types";
+import type { Film, Status } from "./types";
+
+const statuses: ("All" | Status)[] = ["All", "Own", "Want"];
 
 const FilmList = () => {
   const [films, setFilms] = useState<Film[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<"All" | Status>("All");
 
 useEffect(() => {
   const load = async () => {
@@ -30,13 +33,29 @@ useEffect(() => {
   if (loading) return <p>Loading films...</p>;
   if (error) return <p>{error}</p>;
 
-  return (
+const visibleFilms =
+  selectedStatus === "All"
+    ? films
+    : films.filter(film => film.status === selectedStatus);
+
+return (
   <div>
-    {films.map(film => (
+    <div>
+      {statuses.map(status => (
+        <button
+          key={status}
+          aria-pressed={status === selectedStatus}
+          onClick={() => setSelectedStatus(status)}
+        >
+          {status}
+        </button>
+      ))}
+    </div>
+    {visibleFilms.map(film => (
       <FilmCard key={film.id} film={film} />
     ))}
   </div>
-  );
+);
 };
 
 export default FilmList;
