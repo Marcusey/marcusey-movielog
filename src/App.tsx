@@ -1,5 +1,7 @@
-const App = () => {
-  return <h1>MovieLog</h1>
-}
+import FilmList from "./FilmList";
 
-export default App
+const App = () => {
+  return <FilmList />;
+};
+
+export default App;
