@@ -40,10 +40,11 @@ const FilmList = () => {
 
   return (
     <div>
-      <div>
+      <div className="filters">
         {statuses.map((status) => (
           <button
             key={status}
+            className={status === selectedStatus ? "filter active" : "filter"}
             aria-pressed={status === selectedStatus}
             onClick={() => setSelectedStatus(status)}
           >
@@ -51,9 +52,11 @@ const FilmList = () => {
           </button>
         ))}
       </div>
-      {visibleFilms.map((film) => (
-        <FilmCard key={film.id} film={film} />
-      ))}
+      <div className="film-grid">
+        {visibleFilms.map((film) => (
+          <FilmCard key={film.id} film={film} />
+        ))}
+      </div>
     </div>
   );
 };
