@@ -56,13 +56,16 @@ const NewFilmPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Could not save the film");
+        const body = await response.json().catch(() => null);
+        throw new Error(body?.message ?? "Could not save the film");
       }
 
       const created: Film = await response.json();
       navigate(`/films/${created.id}`);
-    } catch {
-      setError("Something went wrong saving the film");
+    } catch (e) {
+      setError(
+        e instanceof Error ? e.message : "Something went wrong saving the film",
+      );
     } finally {
       setSaving(false);
     }

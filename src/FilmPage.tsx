@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { API_URL } from "./api";
 import type { Film } from "./types";
 
@@ -8,6 +8,8 @@ const FilmPage = () => {
   const [film, setFilm] = useState<Film | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const [actionError, setActionError] = useState<string | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -30,6 +32,22 @@ const FilmPage = () => {
     load();
   }, [id]);
 
+  const handleDelete = async () => {
+    if (!window.confirm("Delete this film?")) return;
+
+    try {
+      const response = await fetch(`${API_URL}/items/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("You could'nt delete the film");
+      }
+      navigate("/");
+    } catch {
+      setActionError("Something went wrong deleting the film");
+    }
+  };
+
   if (loading) return <p>Loading film...</p>;
   if (error || !film) return <p>{error}</p>;
 
@@ -44,6 +62,8 @@ const FilmPage = () => {
       </p>
       {film.rating != null && <p>Rating: {film.rating}/5</p>}
       {film.notes && <p>{film.notes}</p>}
+      {actionError && <p>{actionError}</p>}
+      <button onClick={handleDelete}>Delete</button>
     </article>
   );
 };
