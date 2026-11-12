@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { API_URL } from "./api";
-import type { Film } from "./types";
+import type { Film, Status } from "./types";
 
 const FilmPage = () => {
   const { id } = useParams();
@@ -48,6 +48,23 @@ const FilmPage = () => {
     }
   };
 
+  const handleUpdate = async (changes: Partial<Film>) => {
+    try {
+      const response = await fetch(`${API_URL}/items/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(changes),
+      });
+      if (!response.ok) {
+        throw new Error("Could not update the film");
+      }
+      setFilm((current) => (current ? { ...current, ...changes } : current));
+      setActionError(null);
+    } catch {
+      setActionError("Something went wrong updating the film");
+    }
+  };
+
   if (loading) return <p>Loading film...</p>;
   if (error || !film) return <p>{error}</p>;
 
@@ -57,10 +74,31 @@ const FilmPage = () => {
       {film.imageUrl && <img src={film.imageUrl} alt={film.title} />}
       <h2>{film.title}</h2>
       <p>{film.subtitle}</p>
-      <p>
-        {film.category} · {film.status}
-      </p>
-      {film.rating != null && <p>Rating: {film.rating}/5</p>}
+      <p>{film.category}</p>
+      <label htmlFor="status">Status</label>
+      <select
+        id="status"
+        value={film.status ?? "Own"}
+        onChange={(e) => handleUpdate({ status: e.target.value as Status })}
+      >
+        <option value="Own">Own</option>
+        <option value="Want">Want</option>
+      </select>
+      <label htmlFor="rating">Rating</label>
+      <select
+        id="rating"
+        value={film.rating ?? ""}
+        onChange={(e) => handleUpdate({ rating: Number(e.target.value) })}
+      >
+        <option value="" disabled>
+          No rating
+        </option>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <option key={n} value={n}>
+            {n}
+          </option>
+        ))}
+      </select>{" "}
       {film.notes && <p>{film.notes}</p>}
       {actionError && <p>{actionError}</p>}
       <button onClick={handleDelete}>Delete</button>
