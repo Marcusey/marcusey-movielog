@@ -9,7 +9,7 @@ const Layout = () => {
           <Link to="/new">Add film</Link>
         </nav>
       </header>
-      
+
       <main>
         <Outlet />
       </main>

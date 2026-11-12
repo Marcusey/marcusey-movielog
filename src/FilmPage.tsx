@@ -39,7 +39,9 @@ const FilmPage = () => {
       {film.imageUrl && <img src={film.imageUrl} alt={film.title} />}
       <h2>{film.title}</h2>
       <p>{film.subtitle}</p>
-      <p>{film.category} · {film.status}</p>
+      <p>
+        {film.category} · {film.status}
+      </p>
       {film.rating != null && <p>Rating: {film.rating}/5</p>}
       {film.notes && <p>{film.notes}</p>}
     </article>

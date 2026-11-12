@@ -11,51 +11,51 @@ const FilmList = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<"All" | Status>("All");
 
-useEffect(() => {
-  const load = async () => {
-    try {
-      const response = await fetch(`${API_URL}/items`);
-      if (!response.ok) {
-        throw new Error("Could not load films");
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await fetch(`${API_URL}/items`);
+        if (!response.ok) {
+          throw new Error("Could not load films");
+        }
+        const data = await response.json();
+        setFilms(data);
+      } catch {
+        setError("Something went wrong loading your films");
+      } finally {
+        setLoading(false);
       }
-      const data = await response.json();
-      setFilms(data);
-    } catch {
-      setError("Something went wrong loading your films");
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  load();
-}, []);
+    load();
+  }, []);
 
   if (loading) return <p>Loading films...</p>;
   if (error) return <p>{error}</p>;
 
-const visibleFilms =
-  selectedStatus === "All"
-    ? films
-    : films.filter(film => film.status === selectedStatus);
+  const visibleFilms =
+    selectedStatus === "All"
+      ? films
+      : films.filter((film) => film.status === selectedStatus);
 
-return (
-  <div>
+  return (
     <div>
-      {statuses.map(status => (
-        <button
-          key={status}
-          aria-pressed={status === selectedStatus}
-          onClick={() => setSelectedStatus(status)}
-        >
-          {status}
-        </button>
+      <div>
+        {statuses.map((status) => (
+          <button
+            key={status}
+            aria-pressed={status === selectedStatus}
+            onClick={() => setSelectedStatus(status)}
+          >
+            {status}
+          </button>
+        ))}
+      </div>
+      {visibleFilms.map((film) => (
+        <FilmCard key={film.id} film={film} />
       ))}
     </div>
-    {visibleFilms.map(film => (
-      <FilmCard key={film.id} film={film} />
-    ))}
-  </div>
-);
+  );
 };
 
 export default FilmList;
