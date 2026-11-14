@@ -10,6 +10,7 @@ const FilmPage = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [actionError, setActionError] = useState<string | null>(null);
+  const [imageInput, setImageInput] = useState("");
 
   useEffect(() => {
     const load = async () => {
@@ -65,12 +66,21 @@ const FilmPage = () => {
     }
   };
 
+  const handleSaveImage = () => {
+    const url = imageInput.trim();
+    if (!url) return;
+    handleUpdate({ imageUrl: url });
+    setImageInput("");
+  };
+
   if (loading) return <p>Loading film...</p>;
   if (error || !film) return <p>{error}</p>;
 
   return (
     <article className="film-page">
-      <Link to="/" className="btn btn-outline">← Back</Link>
+      <Link to="/" className="btn btn-outline">
+        ← Back
+      </Link>
       {film.imageUrl ? (
         <img src={film.imageUrl} alt={film.title} />
       ) : (
@@ -105,6 +115,14 @@ const FilmPage = () => {
       </select>{" "}
       {film.notes && <p>{film.notes}</p>}
       {actionError && <p>{actionError}</p>}
+      <label htmlFor="imageUrl">Cover image URL</label>
+      <input
+        id="imageUrl"
+        value={imageInput}
+        onChange={(e) => setImageInput(e.target.value)}
+        placeholder="https://movielog-sigma.vercel.app/images/..."
+      />
+      <button onClick={handleSaveImage}>Save cover</button>
       <button onClick={handleDelete}>Delete</button>
     </article>
   );

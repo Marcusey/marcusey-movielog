@@ -120,7 +120,8 @@ main {
   text-align: center;
 }
 
-/* ===== Film page ===== */
+/* ==================== Film page ==================== */
+
 .film-page img,
 .film-page .cover-placeholder {
   display: block;
@@ -131,7 +132,8 @@ main {
   border-radius: 12px;
 }
 
-/* ===== Buttons ===== */
+/* ==================== Buttons ==================== */
+
 .btn {
   display: inline-block;
   padding: 8px 16px;

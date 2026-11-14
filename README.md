@@ -38,10 +38,10 @@ Everyone who opens the app sees this collection, since the handle is fixed in `s
 
 ## Grade
 
-## Grade
-
 I am aiming for **G**.
 
 ## Possible improvements
 
 - Let each visitor choose their own handle in the app, so everyone builds their own collection instead of sharing.
+- Let visitors upload their own cover images with an image hosting service, instead of pasting a URL.
+- Sort by multiple variations, as format (BluRay/DVD), alphabetical order.
