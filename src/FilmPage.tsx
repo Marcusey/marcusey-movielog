@@ -69,9 +69,13 @@ const FilmPage = () => {
   if (error || !film) return <p>{error}</p>;
 
   return (
-    <article>
-      <Link to="/">← Back</Link>
-      {film.imageUrl && <img src={film.imageUrl} alt={film.title} />}
+    <article className="film-page">
+      <Link to="/" className="btn btn-outline">← Back</Link>
+      {film.imageUrl ? (
+        <img src={film.imageUrl} alt={film.title} />
+      ) : (
+        <div className="cover-placeholder">{film.title}</div>
+      )}{" "}
       <h2>{film.title}</h2>
       <p>{film.subtitle}</p>
       <p>{film.category}</p>

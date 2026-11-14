@@ -6,7 +6,7 @@ const Layout = () => {
       <header>
         <nav>
           <Link to="/">Movielog</Link>
-          <Link to="/new">Add film</Link>
+          <Link to="/new" className="btn">Add film +</Link>
         </nav>
       </header>
 
