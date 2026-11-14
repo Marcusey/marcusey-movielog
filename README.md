@@ -1,75 +1,47 @@
-# React + TypeScript + Vite
+# Movielog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A collection tracker for movies where I keep track of the films I own, in witch format and rated how needed they are.
+Also with the option of keep track of ones I want, and there give rate of how much they are needed.
 
-Currently, two official plugins are available:
+**Live app:** https://movielog-sigma.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- List all films, with a status filter (All, Own, Want)
+- A page for each film with cover, edition, format, status and rating
+- Add a new film
+- Change status and rating, and/or delete a film
+- Loading indicators, error messages and a 404 page
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+React, TypeScript, Vite and React Router.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Run locally
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+git clone https://github.com/Marcusey/marcusey-movielog.git
+cd marcusey-movielog
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Then open the address shown in the terminal, usually http://localhost:5173.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## API and handle
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The app uses the Shelf API (https://shelf-api-mu.vercel.app/docs). There is no login. Instead, items are saved under a handle that is part of the URL.
 
-```
+**My handle:** `marcusey`
+
+Everyone who opens the app sees this collection, since the handle is fixed in `src/api.ts`.
+
+## Grade
+
+## Grade
+
+I am aiming for **G**.
+
+## Possible improvements
+
+- Let each visitor choose their own handle in the app, so everyone builds their own collection instead of sharing.
