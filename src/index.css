@@ -106,3 +106,16 @@ main {
 .film-card > :last-child {
   padding-bottom: 16px;
 }
+
+.cover-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  aspect-ratio: 3 / 4;
+  padding: 16px;
+  background: var(--surface);
+  color: var(--muted);
+  font-weight: 600;
+  text-align: center;
+}
